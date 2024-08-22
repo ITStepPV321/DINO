@@ -1,0 +1,23 @@
+.menu-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Make the button larger */
+    width: 100px; /* Adjust this value as needed */
+    height: 100px; /* Adjust this value as needed */
+    
+    /* Make the button perfectly circular */
+    border-radius: 50%;
+    
+    /* Optional: Styling for the button */
+    background-color: #000; /* Button color */
+    border: none; /* Remove border */
+    color: #fff; /* Text color */
+    font-size: 24px; /* Adjust text size as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
