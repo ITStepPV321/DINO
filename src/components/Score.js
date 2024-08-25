@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { resetScore, updateRecord, updateScore } from './statsSlice';
 import { increaseDifficulty, resetDifficulty } from './configSlice';
 
-export default function Speed()
+export default function Score()
 {
     const stats = useSelector((state) => state.stats);
     const config = useSelector((state) => state.config);

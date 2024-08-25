@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  record: 200,
+  record: 0,
   score: 0,
   coins: 0
 }
