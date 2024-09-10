@@ -1,0 +1,20 @@
+.squirrel {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(-2%, -50%);
+    /* background-color: blue; */
+    background-image: url("../assets/Squirrel.gif");
+    background-repeat: no-repeat;
+}
+
+.cactus {
+    width: 50px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: red;
+}
