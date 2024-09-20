@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetScore, updateRecord, updateScore } from "./statsSlice";
-import { increaseDifficulty, resetDifficulty } from "./configSlice";
+import { increaseDifficulty, resetDifficulty, startGame, stopGame, updateGameStatus } from "./configSlice";
 
 export default function Score() {
     const stats = useSelector((state) => state.stats);
     const config = useSelector((state) => state.config);
-
-    const [is_playing, setIsPlaying] = useState(true);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         let intervalId;
 
-        if (is_playing) {
+        if (config.isPlaying) {
             intervalId = setInterval(() => {
                 if (stats.score % config.distPerDiffIncrease === 0 && stats.score !== 0) {
                     if (config.difficulty !== config.maxDifficulty) {
                         dispatch(increaseDifficulty());
+
+                        console.log(config.difficulty);
                     }
                 }
 
@@ -37,7 +37,7 @@ export default function Score() {
         };
     }, [
         dispatch,
-        is_playing,
+        config.isPlaying,
         stats.score,
         config.difficulty,
         config.interval,
@@ -48,13 +48,23 @@ export default function Score() {
     ]);
 
     const playStopOnClick = () => {
-        setIsPlaying(!is_playing);
+        // setIsPlaying(!is_playing);
+        if (config.isGameOver)
+        {
+            dispatch(startGame());
+        }
+        else
+        {
+            dispatch(stopGame())
+        }
+
         dispatch(resetScore());
         dispatch(resetDifficulty());
     };
 
     const pauseOnClick = () => {
-        setIsPlaying(!is_playing);
+        // setIsPlaying(!is_playing);
+        dispatch(updateGameStatus());
     };
 
     return (

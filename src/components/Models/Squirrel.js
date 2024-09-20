@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-export default function Squirrel() {
+export default function Squirrel({ onCollision }) {
+    const config = useSelector((state) => state.config);
     const [pos, setPos] = useState(50);
-    const [velocity, setVelocity] = useState(7); // Початкова швидкість стрибка
+    const [velocity, setVelocity] = useState(7);
     const [isJumpUp, setIsJumpUp] = useState(false);
     const [isJump, setIsJump] = useState(false);
-    const gravity = 0.10; // Гравітація
+    const gravity = 0.50;  // Збільшив гравітацію (Юр є баг зі стрибком, білка деколи стрибає зависоко. Попереднє значення: 0.30)
 
     useEffect(() => {
         const handleSpace = (e) => {
             if (e.keyCode === 32 && !isJump) {
                 setIsJump(true);
                 setIsJumpUp(true);
-                setVelocity(5); // Початкова швидкість підйому
+                setVelocity(5);
             }
         };
 
@@ -21,37 +23,64 @@ export default function Squirrel() {
     }, [isJump]);
 
     useEffect(() => {
-        let intervalId;
-
-        if (isJump) {
-            intervalId = setInterval(() => {
-                setPos(prevPos => {
-                    let newPos = prevPos;
-
-                    if (isJumpUp) {
-                        newPos -= velocity; // Підйом з поточною швидкістю
-                        setVelocity(prevVelocity => prevVelocity - gravity); // Зменшуємо швидкість підйому
-
-                        if (velocity <= 0) { // Коли швидкість підйому досягає 0, починаємо спуск
-                            setIsJumpUp(false);
+        if (!config.isGameOver)
+        {
+            let intervalId;
+    
+            if (isJump) {
+                intervalId = setInterval(() => {
+                    setPos(prevPos => {
+                        let newPos = prevPos;
+    
+                        if (isJumpUp) {
+                            newPos -= velocity;
+                            setVelocity(prevVelocity => prevVelocity - gravity);
+    
+                            if (velocity <= 0) {
+                                setIsJumpUp(false);
+                            }
+                        } else {
+                            newPos += velocity;
+                            setVelocity(prevVelocity => prevVelocity + gravity);
+    
+                            if (newPos >= 50) {
+                                newPos = 50;
+                                setIsJump(false);
+                            }
                         }
-                    } else {
-                        newPos += velocity; // Спуск з поточною швидкістю
-                        setVelocity(prevVelocity => prevVelocity + gravity); // Збільшуємо швидкість спуску
-
-                        if (newPos >= 50) { // Повернення до вихідної позиції
-                            newPos = 50;
-                            setIsJump(false); // Завершення стрибка
-                        }
-                    }
-
-                    return newPos;
-                });
-            }, 20); // Інтервал оновлення позиції
+    
+                        return newPos;
+                    });
+                }, 20);
+            }
+    
+            return () => clearInterval(intervalId);
         }
+    }, [isJump, isJumpUp, velocity, config.isGameOver]);
 
-        return () => clearInterval(intervalId);
-    }, [isJump, isJumpUp, velocity]);
+    // Колізія з перешкодами
+    useEffect(() => {
+        const checkCollision = () => {
+            const squirrelRect = document.querySelector('.squirrel').getBoundingClientRect();
+
+            const obstacles = document.querySelectorAll('.obstacle');
+            obstacles.forEach(obstacle => {
+                const obstacleRect = obstacle.getBoundingClientRect();
+                if (
+                    squirrelRect.x < obstacleRect.x + obstacleRect.width &&
+                    squirrelRect.x + squirrelRect.width > obstacleRect.x &&
+                    squirrelRect.y < obstacleRect.y + obstacleRect.height &&
+                    squirrelRect.height + squirrelRect.y > obstacleRect.y
+                ) {
+                    onCollision();
+                }
+            });
+        };
+
+        const interval = setInterval(checkCollision, 100);
+
+        return () => clearInterval(interval);
+    }, [pos, onCollision]);
 
     return (
         <div
