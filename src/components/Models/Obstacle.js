@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import obstacleImage from '../../assets/Obstacle.png';
+import treeStumpImage from '../../assets/TreeStump.png';
 
-const Obstacle = ({ speed }) => {
+const TreeStump = ({ speed }) => {
     const [position, setPosition] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -12,20 +12,20 @@ const Obstacle = ({ speed }) => {
         return () => clearInterval(interval);
     }, [speed]);
 
-    const obstacleStyle = {
+    const Style = {
         position: 'absolute',
-        top: '50%',
+        top: '90%',
         left: `${position}px`,
         transform: 'translateY(-50%)',
-        width: '50px',
-        height: '70px',
-        backgroundImage: `url(${obstacleImage})`,
+        width: '74px',
+        height: '58px',
+        backgroundImage: `url(${treeStumpImage})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'contain',
     };
 
-    return <div className='obstacle' style={obstacleStyle}></div>;
+    return <div className='obstacle' style={Style}></div>;
 };
 
 
-export default Obstacle;
+export default TreeStump;

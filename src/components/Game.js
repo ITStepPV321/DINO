@@ -1,7 +1,6 @@
 // Невеличка анексія тім-ліда
 import Squirrel from "./Models/Squirrel";
 import Score from "./Score";
-import Ground from "./Models/Ground";
 import { useEffect, useState } from "react";
 import Obstacle from "./Models/Obstacle";
 import { useDispatch, useSelector } from "react-redux";
@@ -101,7 +100,6 @@ export default function Game() {
                     <Obstacle key={obstacle.id} speed={obstacle.speed} />
                     ))}
             </div>
-            <Ground />
             {config.isGameOver && <div className="game-over">Game Over</div>}
             <Score />
         </div>

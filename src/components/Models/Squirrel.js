@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export default function Squirrel({ onCollision }) {
     const config = useSelector((state) => state.config);
-    const [pos, setPos] = useState(50);
+    const [pos, setPos] = useState(94);
     const [velocity, setVelocity] = useState(7);
     const [isJumpUp, setIsJumpUp] = useState(false);
     const [isJump, setIsJump] = useState(false);
@@ -43,8 +43,8 @@ export default function Squirrel({ onCollision }) {
                             newPos += velocity;
                             setVelocity(prevVelocity => prevVelocity + gravity);
     
-                            if (newPos >= 50) {
-                                newPos = 50;
+                            if (newPos >= 94) {
+                                newPos = 94;
                                 setIsJump(false);
                             }
                         }

@@ -12,11 +12,13 @@ import Game from './components/Game';
 
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path='/' element={<Menu/>}/>
-        <Route path='/Game' element={<Game/>}/>
-      </Routes>
+    <div className='background'>
+      <div className="App">
+        <Routes>
+          <Route path='/' element={<Menu/>}/>
+          <Route path='/Game' element={<Game/>}/>
+        </Routes>
+      </div>
     </div>
   );
 }

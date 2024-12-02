@@ -79,7 +79,7 @@ export default function Score() {
                     <img
                         width="30"
                         height="30"
-                        src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
+                        src="https://img.icons8.com/?size=100&id=37308&format=png&color=000000"
                         alt="play--v1"
                     />
                 </button>
